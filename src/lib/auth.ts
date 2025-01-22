@@ -2,6 +2,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 import { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { prisma } from './prisma'
+import { isAdmin } from './auth-utils'
 
 export const authOptions: NextAuthOptions = {
   debug: true, // デバッグモードを有効化
@@ -19,6 +20,7 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, user }) => {
       if (session?.user) {
         session.user.id = user.id
+        session.user.isAdmin = isAdmin(session.user.email)
       }
       return session
     },
