@@ -20,23 +20,13 @@ export function PostCard({ post }: PostCardProps) {
   return (
     <Link 
       href={`/posts/${post.id}`}
-      className="block group"
+      className="block h-full"
     >
-      <article className="p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
-        <div className="flex items-center gap-4 mb-4">
-          {post.user.image && (
-            <div className="relative w-10 h-10">
-              <Image
-                src={post.user.image}
-                alt={post.user.name || ''}
-                fill
-                className="rounded-full object-cover"
-              />
-            </div>
-          )}
-          <div>
+      <article className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 p-6 h-full flex flex-col justify-between">
+        <div className="space-y-4">
+          <div className="flex items-center gap-4">
             <div className="font-medium text-gray-800">
-              {post.user.name}
+              K
             </div>
             <time className="text-sm text-gray-500">
               {formatDistanceToNow(new Date(post.createdAt), { 
@@ -45,17 +35,18 @@ export function PostCard({ post }: PostCardProps) {
               })}
             </time>
           </div>
+
+          <h2 className="text-xl font-bold text-gray-900 line-clamp-1">
+            {post.title}
+          </h2>
+          
+          <p className="text-gray-600 line-clamp-3">
+            {post.content.replace(/[#*`]/g, '')}
+          </p>
         </div>
-        <h2 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-          {post.title}
-        </h2>
-        <p className="text-gray-600 line-clamp-2">
-          {post.content.replace(/[#*`]/g, '')}
-        </p>
-        <div className="mt-4 flex items-center text-sm text-gray-500">
-          <span className="hover:text-blue-600 transition-colors">
-            続きを読む →
-          </span>
+
+        <div className="mt-4 text-sm text-blue-600 hover:text-blue-700">
+          続きを読む →
         </div>
       </article>
     </Link>
