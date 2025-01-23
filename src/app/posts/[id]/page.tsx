@@ -19,7 +19,8 @@ async function getPost(id: string) {
 }
 
 export default async function PostPage({params}: {params: {id: string}}) {
-  const post = await getPost(params.id)
+  const { id } = await params; // `await` を適用する
+  const post = await getPost(id);
 
   return (
     <div className="max-w-3xl mx-auto">
