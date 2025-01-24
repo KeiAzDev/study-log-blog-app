@@ -1,9 +1,8 @@
 // src/components/posts/post-card.tsx
 import Link from 'next/link'
-import Image from 'next/image'
 import { formatDistanceToNow } from 'date-fns'
 import { ja } from 'date-fns/locale'
-import type { Log, User } from '@prisma/client'
+import type { Log } from '@prisma/client'
 
 type PostWithUser = Log & {
   user: {

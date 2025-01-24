@@ -31,7 +31,8 @@ export async function GET(
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
-  } catch (error) {
+  } catch (error: any) {
+    console.error('Delete error:', error)
     return NextResponse.json(
       { error: "Failed to fetch post" },
       { status: 500 }
@@ -65,7 +66,8 @@ export async function PATCH(
     });
 
     return NextResponse.json(post);
-  } catch (error) {
+  } catch (error: any) {
+    console.error('Delete error:', error)
     return NextResponse.json(
       { error: "Failed to update post" },
       { status: 500 }
@@ -93,7 +95,8 @@ export async function DELETE(
     })
 
     return NextResponse.json({message: 'Post deleted successfully'})
-  } catch (error) {
+  } catch (error: any) {
+    console.error('Delete error:', error)
     return NextResponse.json(
       { error: "Failed to delete post" },
       { status: 500 }

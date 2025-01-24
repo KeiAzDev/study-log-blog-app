@@ -15,10 +15,11 @@ async function getPosts() {
 }
 
 export default async function PostsPage() {
-  const [session, posts] = await Promise.all([
-    getServerSession(authOptions),
-    getPosts()
-  ])
+  // const [session, posts] = await Promise.all([
+  //   getServerSession(authOptions),
+  //   getPosts()
+  // ])
+  const posts = await getPosts()
 
   return (
     <div className="max-w-4xl mx-auto">

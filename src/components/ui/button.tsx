@@ -20,7 +20,8 @@ export const Button = ({
   }
 
   return (
-    <button className={twMerge(baseStyles, variants[variant], className)}>
+    // <button className={twMerge(baseStyles, variants[variant], className)}>
+    <button className={twMerge(baseStyles, variants[variant], className)} {...props}>
       {children}
     </button>
   )

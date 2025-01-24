@@ -1,4 +1,3 @@
-// src/components/layout/header.tsx
 'use client'
 
 import Link from 'next/link'
@@ -8,7 +7,7 @@ import LogoutButton from '../auth/logout-button'
 import { useSession } from 'next-auth/react'
 
 export default function Header() {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
 
   return (
     <header className="border-b border-gray-200">
