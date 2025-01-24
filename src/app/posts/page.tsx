@@ -1,19 +1,27 @@
 import { prisma } from "@/lib/prisma";
 import { PostCard } from "@/components/posts/post-card";
 
-async function getPosts() {
-  return prisma.log.findMany({
-    orderBy: { createdAt: "desc" },
-    include: {
-      user: {
-        select: { name: true, image: true },
-      },
-    },
-  });
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  user?: {
+    name: string;
+    image?: string;
+  };
 }
 
 export default async function PostsPage() {
-  const posts = await getPosts();
+  const res = await fetch("https://study-log-blog-app.vercel.app/api/posts", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch posts");
+  }
+
+  const posts: Post[] = await res.json(); // 型アサーション
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -27,3 +35,4 @@ export default async function PostsPage() {
     </div>
   );
 }
+

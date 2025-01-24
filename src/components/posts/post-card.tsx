@@ -11,7 +11,16 @@ type PostWithUser = Log & {
 };
 
 interface PostCardProps {
-  post: PostWithUser;
+  post: {
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    user?: {
+      name: string;
+      image?: string;
+    };
+  };
 }
 
 export function PostCard({ post }: PostCardProps) {
