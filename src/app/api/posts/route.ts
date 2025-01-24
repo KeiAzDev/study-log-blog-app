@@ -23,10 +23,10 @@ export async function GET() {
       },
     });
     return NextResponse.json(posts);
-  } catch (error: any) {
-    console.error("Fetch error:", error);
+  } catch (error: Error | unknown) {
+    console.error('Error:', error);
     return NextResponse.json(
-      { error: "Failed to fetch posts" },
+      { error: error instanceof Error ? error.message : "An error occurred" },
       { status: 500 }
     );
   }
@@ -56,10 +56,10 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(post);
-  } catch (error: any) {
-    console.error("Create error:", error);
+  } catch (error: Error | unknown) {
+    console.error('Error:', error);
     return NextResponse.json(
-      { error: "Failed to create post" },
+      { error: error instanceof Error ? error.message : "An error occurred" },
       { status: 500 }
     );
   }

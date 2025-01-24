@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
@@ -10,12 +10,13 @@ interface UpdatePostRequest {
 }
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
+  const { id } = context.params;
   try {
     const post = await prisma.log.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         user: {
           select: {
@@ -31,19 +32,20 @@ export async function GET(
     }
     
     return NextResponse.json(post);
-  } catch (error: any) {
-    console.error('Fetch error:', error);
+  } catch (error: Error | unknown) {
+    console.error('Error:', error);
     return NextResponse.json(
-      { error: "Failed to fetch post" },
+      { error: error instanceof Error ? error.message : "An error occurred" },
       { status: 500 }
     );
   }
 }
 
 export async function PATCH(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
+  const { id } = context.params;
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user || !isAdmin(session.user.email)) {
@@ -56,7 +58,7 @@ export async function PATCH(
     }
 
     const post = await prisma.log.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         ...(title && { title }),
         ...(content && { content }),
@@ -64,19 +66,20 @@ export async function PATCH(
     });
 
     return NextResponse.json(post);
-  } catch (error: any) {
-    console.error('Update error:', error);
+  } catch (error: Error | unknown) {
+    console.error('Error:', error);
     return NextResponse.json(
-      { error: "Failed to update post" },
+      { error: error instanceof Error ? error.message : "An error occurred" },
       { status: 500 }
     );
   }
 }
 
 export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
+  const { id } = context.params;
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user || !isAdmin(session.user.email)) {
@@ -87,14 +90,14 @@ export async function DELETE(
     }
 
     await prisma.log.delete({
-      where: { id: params.id }
+      where: { id }
     });
 
     return NextResponse.json({ message: "Post deleted successfully" });
-  } catch (error: any) {
-    console.error('Delete error:', error);
+  } catch (error: Error | unknown) {
+    console.error('Error:', error);
     return NextResponse.json(
-      { error: "Failed to delete post" },
+      { error: error instanceof Error ? error.message : "An error occurred" },
       { status: 500 }
     );
   }
