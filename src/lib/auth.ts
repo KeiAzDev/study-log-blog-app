@@ -5,7 +5,7 @@ import { prisma } from './prisma'
 import { isAdmin } from './auth-utils'
 
 export const authOptions: NextAuthOptions = {
-  debug: true, // デバッグモードを有効化
+  // debug: true, // デバッグモードを有効化
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
