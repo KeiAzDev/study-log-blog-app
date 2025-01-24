@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import Image from 'next/image'  // 追加
-import LoginButton from '../auth/login-button'
-import LogoutButton from '../auth/logout-button'
-import { useSession } from 'next-auth/react'
+import Link from "next/link";
+import Image from "next/image";
+import LoginButton from "../auth/login-button";
+import LogoutButton from "../auth/logout-button";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   return (
     <header className="border-b border-gray-200">
@@ -16,7 +16,7 @@ export default function Header() {
           <Link href="/" className="text-xl font-bold">
             Learning Log
           </Link>
-          
+
           <nav className="flex items-center gap-4">
             {session ? (
               <div className="flex items-center gap-4">
@@ -43,5 +43,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

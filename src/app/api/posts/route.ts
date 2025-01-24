@@ -12,9 +12,7 @@ interface CreatePostRequest {
 export async function GET() {
   try {
     const posts = await prisma.log.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: { createdAt: "desc" },
       include: {
         user: {
           select: {
@@ -25,7 +23,8 @@ export async function GET() {
       },
     });
     return NextResponse.json(posts);
-  } catch (error) {
+  } catch (error: any) {
+    console.error("Fetch error:", error);
     return NextResponse.json(
       { error: "Failed to fetch posts" },
       { status: 500 }
@@ -57,7 +56,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(post);
-  } catch (error) {
+  } catch (error: any) {
+    console.error("Create error:", error);
     return NextResponse.json(
       { error: "Failed to create post" },
       { status: 500 }
