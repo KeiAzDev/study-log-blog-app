@@ -1,4 +1,3 @@
-import { prisma } from "@/lib/prisma";
 import { PostCard } from "@/components/posts/post-card";
 
 interface Post {

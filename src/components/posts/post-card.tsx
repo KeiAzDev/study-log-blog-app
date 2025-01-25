@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { ja } from "date-fns/locale";
-import type { Log } from "@prisma/client";
+// import type { Log } from "@prisma/client";
 
-type PostWithUser = Log & {
-  user: {
-    name: string | null;
-    image: string | null;
-  };
-};
+// type PostWithUser = Log & {
+//   user: {
+//     name: string | null;
+//     image: string | null;
+//   };
+// };
 
 interface PostCardProps {
   post: {
