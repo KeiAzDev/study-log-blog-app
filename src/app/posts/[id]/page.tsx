@@ -10,16 +10,9 @@ import { ja } from "date-fns/locale";
 import DeletePostButton from "./delete-post-button";
 import Link from "next/link";
 
-export type PageProps = {
-  params: { 
+type PageProps = {
+  params: {
     id: string;
-    [Symbol.toStringTag]: string;
-    then: <TResult1, TResult2>(
-      onfulfilled?: ((value: unknown) => TResult1 | PromiseLike<TResult1>) | null, 
-      onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null
-    ) => Promise<TResult1 | TResult2>;
-    catch: (onrejected?: ((reason: unknown) => unknown) | null) => Promise<unknown>;
-    finally: (onfinally?: (() => void) | null) => Promise<unknown>;
   };
 };
 
@@ -36,13 +29,19 @@ async function getPost(id: string) {
   return post;
 }
 
-export default async function PostPage({ params }: PageProps) {
-  const { id } = params;
+export default async function PostPage({ 
+  params 
+}: { 
+  params: { id: string } 
+}) {
+  // paramsがPromiseの場合、まず解決する
+  const resolvedParams = await Promise.resolve(params);
+  const { id } = resolvedParams;
+
   const [session, post] = await Promise.all([
     getServerSession(authOptions),
     getPost(id),
   ]);
-
   const isAuthorized = session?.user && isAdmin(session.user.email);
 
   return (
