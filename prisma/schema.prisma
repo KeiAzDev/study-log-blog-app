@@ -49,6 +49,7 @@ model User {
   accounts Account[]
   sessions Session[]
   logs Log[]
+  comments  Comment[]
 }
 
 model Log {
@@ -59,6 +60,19 @@ model Log {
   updatedAt DateTime @updatedAt
   userId String @db.ObjectId
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  logId     String   @db.ObjectId
+  userId    String   @db.ObjectId
+  
+  log       Log      @relation(fields: [logId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
