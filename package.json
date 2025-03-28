@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "echo \"No tests specified yet\" && exit 0"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
